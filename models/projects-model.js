@@ -21,6 +21,6 @@ function addProject(project){
 }
 
 function getTasksByProjectId(id){
-    return db("tasks")
+    return db("tasks as t").select("t.id", "t.description", "t.notes", "t.completed")
         .where({project_id: id})
 }
