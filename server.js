@@ -14,9 +14,11 @@ server.use(express.json());
 
 const projectRouter = require("./routers/project-router");
 const taskRouter = require("./routers/task-router");
+const resourceRouter = require("./routers/resource-router");
 
-server.use("/api/projects", projectRouter)
-server.use("/api/tasks", taskRouter)
+server.use("/api/projects", projectRouter);
+server.use("/api/tasks", taskRouter);
+server.use("/api/resources", resourceRouter);
 
 
 module.exports = server;
