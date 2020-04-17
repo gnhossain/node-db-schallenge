@@ -26,17 +26,30 @@ router.get("/:id", (req, res) => {
     const id = req.params.id
     db.getProjectById(id) 
     .then(project => {
+        project.forEach(project => {
             if (project.completed) {
                 project.completed = "true"
             } else {
                 project.completed = "false"
             }
+            db.getTasksByProjectId(id)
+            .then(tasks => {
+                tasks.forEach(task => {
+                    if (task.completed) {
+                        task.completed = "true"
+                    } else {
+                        task.completed = "false"
+                    }
+                })
+                project.tasks = tasks;
+                res.status(201).json(project)
+            })
             
-            res.status(201).json(project)
+        })
     })
     .catch(err => {
         res.status(500).json({
-            message: "Error getting projects: ", err
+            message: "Error getting project: ", err
         })
     })
 });
